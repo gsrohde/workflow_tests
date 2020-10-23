@@ -14,4 +14,5 @@ jobs:
           super_secret: "lower case super secret"
         run: |
           echo "THIS IS MY SECRET: $SUPER_SECRET"
+          echo "this is my secret: $super_secret"
           echo $secret
