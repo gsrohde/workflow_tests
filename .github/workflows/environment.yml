@@ -1,9 +1,9 @@
 on: push
 
-runs-on: ubuntu-latest
-
 jobs:
   example-job:
+    runs-on: macOS-latest
+
     steps:
       - name: Retrieve secret
         env:
