@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Retrieve secret
         env:
-          SUPER_SECRET: ${{ secrets.SUPERSECRET }}
+          #SUPER_SECRET: ${{ secrets.SUPERSECRET }}
           secret: "not such a secret, really"
           super_secret: "lower case super secret"
         run: |
