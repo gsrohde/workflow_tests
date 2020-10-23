@@ -9,6 +9,6 @@ jobs:
     steps:
       - name: Retrieve secret
         env:
-          super_secret: ${{ secrets.SUPERSECRET }}
+          SUPER_SECRET: ${{ secrets.SUPERSECRET }}
         run: |
           echo "$SUPER_SECRET"
