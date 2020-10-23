@@ -11,4 +11,5 @@ jobs:
         env:
           SUPER_SECRET: ${{ secrets.SUPERSECRET }}
         run: |
-          echo "$SUPER_SECRET"
+          - echo "THIS IS MY SECRET: $SUPER_SECRET"
+          - echo "Or maybe this: ${{ secrets.SUPERSECRET }}
