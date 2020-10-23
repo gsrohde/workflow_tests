@@ -10,5 +10,7 @@ jobs:
       - name: Retrieve secret
         env:
           SUPER_SECRET: ${{ secrets.SUPERSECRET }}
+          secret: "not such a secret, really"
         run: |
           echo "THIS IS MY SECRET: $SUPER_SECRET"
+          echo $secret
