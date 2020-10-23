@@ -11,6 +11,7 @@ jobs:
         env:
           SUPER_SECRET: ${{ secrets.SUPERSECRET }}
           secret: "not such a secret, really"
+          super_secret: "lower case super secret"
         run: |
           echo "THIS IS MY SECRET: $SUPER_SECRET"
           echo $secret
