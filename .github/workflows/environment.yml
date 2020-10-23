@@ -12,4 +12,3 @@ jobs:
           SUPER_SECRET: ${{ secrets.SUPERSECRET }}
         run: |
           - echo "THIS IS MY SECRET: $SUPER_SECRET"
-          - echo "Or maybe this: ${{ secrets.SUPERSECRET }}"
