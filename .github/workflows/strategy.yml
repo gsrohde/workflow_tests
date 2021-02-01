@@ -21,9 +21,9 @@ jobs:
         be-thorough: [ false ] # ${{ github.event.name == 'pull_request' }}
         exclude:
           - be-thorough: false
-            config.os: windows-latest
+            config: { os: windows-latest, r: 'release' }
           - be-thorough: false
-            os: macOS-latest
+            config: { os: macOS-latest, r: 'release' }
 
     steps:
       - name: Report Configuration
