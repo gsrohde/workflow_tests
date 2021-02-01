@@ -3,13 +3,15 @@ on:
 
 jobs:
   example-job:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Retrieve secret
         env:
           SUPER_SECRET: ${{ secrets.SUPERSECRET }}
           secret: "not such a secret, really"
+          super_secret: "lower case super secret"
         run: |
           echo "THIS IS MY SECRET: $SUPER_SECRET"
+          echo "this is my secret: $super_secret"
           echo $secret
