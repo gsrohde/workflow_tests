@@ -1,0 +1,35 @@
+on:
+  - workflow_dispatch:
+    inputs:
+      sample-input:
+        description: 'some string'
+        default: 'hiya'
+jobs:
+  R-CMD-check:
+    runs-on: ubuntu-20.04
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: windows-latest, r: 'release'}
+          - {os: macOS-latest, r: 'release'}
+          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+        be-thorough: ${{ github.event.name == 'pull_request' }}
+      exclude:
+        - be-thorough: false
+          config.os: windows-latest
+        - be-thorough: false
+          os: macOS-latest
+
+    steps:
+      - name: Report Configuration
+        run: |
+          echo "os: " ${{ matrix.config.os }}
+          echo "r: " ${{ matrix.config.r }}
+          echo "rspm: " ${{ matrix.config.rspm }}
+          echo "be-thorough: " ${{ matrix.be-thorough }}
+          echo "sample-input: " ${{ github.event.inputs.sample-input }}
