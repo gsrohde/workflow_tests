@@ -1,5 +1,5 @@
 on:
-  - workflow_dispatch:
+  workflow_dispatch:
     inputs:
       sample-input:
         description: 'some string'
