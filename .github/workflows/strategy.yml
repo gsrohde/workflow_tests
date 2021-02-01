@@ -23,9 +23,6 @@ jobs:
         event: [ github.event.name ]
         exclude:
           - event: workflow_dispatch
-            config: { os: windows-latest, r: 'release' }
-          - event: workflow_dispatch
-            config: { os: macOS-latest, r: 'release' }
 
     steps:
       - name: Report Configuration
