@@ -23,12 +23,12 @@ jobs:
     env:
       OS: ${{ matrix.config.os }}
 
-    if:
+    if: |
       (github.event_name == 'workflow_dispatch' &&
        github.event.inputs.sample-input == 'run')
     steps:
       - name: Report Configuration
-        if: matrix.config.os == "ubuntu-20.04"
+        if: matrix.config.os == 'ubuntu-20.04'
         env:
           GITHUB_EVENT: ${{ toJSON(github.event) }}
           MATRIX_CONTEXT: ${{ toJSON(matrix) }}
