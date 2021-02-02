@@ -19,10 +19,10 @@ jobs:
           - {os: macOS-latest, r: 'release'}
           - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-        event: [ 1, 2 ]
+        event: ${{ fromJSON(github.event_name) }}
         exclude:
-          - event: 1
-            config.os: windows-latest
+          - event: 'push'
+
 
     steps:
       - name: Report Configuration
