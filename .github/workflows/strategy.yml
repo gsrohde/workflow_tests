@@ -26,7 +26,7 @@ jobs:
     if: |
       ((github.event_name == 'workflow_dispatch' &&
         github.event.inputs.sample-input == 'run') ||
-       matrix.config.os == 'ubuntu-20.04')
+       strategy.matrix.config.os == 'ubuntu-20.04')
     steps:
       - name: Report Configuration
         env:
