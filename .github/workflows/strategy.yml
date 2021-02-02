@@ -20,9 +20,14 @@ jobs:
           - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
+    env:
+      OS: ${{ matrix.config.os }}
+
     if:
       (github.event_name == 'workflow_dispatch' &&
-       github.event.inputs.sample-input == 'run')
+       github.event.inputs.sample-input == 'run'
+       ||
+       $OS == "ubuntu-20.04")
     steps:
       - name: Report Configuration
         env:
@@ -30,6 +35,7 @@ jobs:
           MATRIX_CONTEXT: ${{ toJSON(matrix) }}
         run: |
           echo "os: " ${{ matrix.config.os }}
+          echo "OS: $OS"
           echo "r: " ${{ matrix.config.r }}
           echo "rspm: " ${{ matrix.config.rspm }}
           echo "github.event: $GITHUB_EVENT"
