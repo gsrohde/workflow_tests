@@ -23,9 +23,11 @@ jobs:
 
     steps:
       - name: Report Configuration
+        env:
+          GITHUB_EVENT: ${{ toJSON(github.event) }}
         run: |
           echo "os: " ${{ matrix.config.os }}
           echo "r: " ${{ matrix.config.r }}
           echo "rspm: " ${{ matrix.config.rspm }}
-          echo "event: " ${{ toJSON(github.event) }}
+          echo "github.event: $GITHUB_EVENT"
           echo "sample-input: " ${{ github.event.inputs.sample-input }}
