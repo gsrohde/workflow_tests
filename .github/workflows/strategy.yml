@@ -23,7 +23,7 @@ jobs:
     env:
       OS: ${{ matrix.config.os }}
 
-    if: matrix.config.os == 'ubuntu-20.04'
+    if: startsWith(matrix.config.os, 'ubuntu-20.04')
     steps:
       - name: Report Configuration
         env:
