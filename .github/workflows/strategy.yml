@@ -24,9 +24,9 @@ jobs:
       OS: ${{ matrix.config.os }}
 
     if: |
-      ${{ ((github.event_name == 'workflow_dispatch' &&
+      ((github.event_name == 'workflow_dispatch' &&
         github.event.inputs.sample-input == 'run') ||
-       matrix.config.os == 'ubuntu-20.04') }}
+       matrix.os == 'ubuntu-20.04')
     steps:
       - name: Report Configuration
         env:
