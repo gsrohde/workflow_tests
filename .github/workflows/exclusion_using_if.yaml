@@ -9,7 +9,7 @@ jobs:
   R-CMD-check:
     runs-on: ubuntu-20.04
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.os }} (${{ matrix.r }})
 
     strategy:
       fail-fast: false
@@ -25,8 +25,7 @@ jobs:
     steps:
       - name: Report Configuration
         run: |
-          echo "os: " ${{ matrix.config.os }}
-          echo "r: " ${{ matrix.config.r }}
-          echo "rspm: " ${{ matrix.config.rspm }}
+          echo "os: " ${{ matrix.os }}
+          echo "r: " ${{ matrix.r }}
           echo "event: " ${{ matrix.event }}
           echo "sample-input: " ${{ github.event.inputs.sample-input }}
