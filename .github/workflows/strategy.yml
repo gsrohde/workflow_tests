@@ -22,7 +22,7 @@ jobs:
 
     if:
       (github.event_name == 'workflow_dispatch' &&
-       inputs.sample-input == 'run')
+       github.event.inputs.sample-input == 'run')
     steps:
       - name: Report Configuration
         env:
