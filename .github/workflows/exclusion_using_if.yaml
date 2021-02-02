@@ -1,0 +1,32 @@
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      sample-input:
+        description: 'some string'
+        default: 'hiya'
+jobs:
+  R-CMD-check:
+    runs-on: ubuntu-20.04
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest, macOS-latest, ubuntu-20.04 ]
+        r: [ 'release', 'devel' ]
+        exclude:
+          - os: windows-latest
+            r: 'devel'
+          - os: macOS-latest
+            r: 'release'
+
+    steps:
+      - name: Report Configuration
+        run: |
+          echo "os: " ${{ matrix.config.os }}
+          echo "r: " ${{ matrix.config.r }}
+          echo "rspm: " ${{ matrix.config.rspm }}
+          echo "event: " ${{ matrix.event }}
+          echo "sample-input: " ${{ github.event.inputs.sample-input }}
