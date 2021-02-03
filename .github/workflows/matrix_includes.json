@@ -1,17 +1,22 @@
 [
     {
-        "runs_on":"ubuntu-16.04",
-        "someValue":"Foo",
-        "runOn":"always"
+        "os":"windows-latest",
+        "r":"release",
+        "runOnEvent":"workflow_dispatch"
     },
     {
-        "runs_on":"ubuntu-18.04",
-        "someValue":"Bar",
-        "runOn":"v2.1-Release"
+        "os":"macOS-latest",
+        "r":"release",
+        "runOnEvent":"workflow_dispatch"
     },
     {
-        "runs_on":"ubuntu-20.04",
-        "someValue":"Hello again",
-        "runOn":"v2.1-Release"
+        "os":"ubuntu-20.04",
+        "r":"release",
+        "runOnEvent":"always"
+    },
+    {
+        "os":"ubuntu-20.04",
+        "r":"devel",
+        "runOnEvent":"workflow_dispatch"
     }
 ]

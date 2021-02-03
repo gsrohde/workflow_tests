@@ -10,23 +10,20 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v2
-      - uses: nelonoel/branch-name@v1.0.1
       - id: set-matrix
         name: Conditional Build Matrix
         uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
         with:          
-          filter: '[?runOn==`${{ env.BRANCH_NAME }}` || runOn==`always`]'
+          filter: '[?runOnEvent==`${{ github.event_name }}` || runOnEvent==`always`]'
   build-n-test:
     needs: matrix_prep
-    runs-on: ${{ matrix.runs_on }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
     steps:
-    - run: echo "Hello ${{ matrix.someValue }}"
     - name: Report Configuration
       env:
         MATRIX_CONTEXT: ${{ toJSON(matrix) }}
       run: |
-        echo "os: " ${{ matrix.runs_on }}
+        echo "os: " ${{ matrix.os }}
         echo "matrix: $MATRIX_CONTEXT"
-    
