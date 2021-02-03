@@ -2,7 +2,9 @@
 
 name: Configurable Build Matrix
 
-on: push
+on:
+  push:
+  workflow_dispatch:
 jobs:
   matrix_prep:
     runs-on: ubuntu-latest
