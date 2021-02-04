@@ -37,19 +37,19 @@ jobs:
           filter: |
             '[?contains(runOnEvent,`${{ github.event_name }}`) ||
 
-               (`${{ github.event.inputs.check-windows }}` == 'true' &&
-                contains(os, 'windows')) ||
+               (`${{ github.event.inputs.check-windows }}` == `"true"` &&
+                contains(os, `"windows"`)) ||
 
-               (`${{ github.event.inputs.check-mac }}` == 'true' &&
-                contains(os, 'macOS')) ||
+               (`${{ github.event.inputs.check-mac }}` == `"true"` &&
+                contains(os, `"macOS"`)) ||
 
-               (contains(os, 'ubuntu') &&
+               (contains(os, `"ubuntu"`) &&
 
-                ((`${{ github.event.inputs.check-r-release-version-on-ubuntu }}` == 'true' &&
-                  contains(r, 'release')) ||
+                ((`${{ github.event.inputs.check-r-release-version-on-ubuntu }}` == `"true"` &&
+                  contains(r, `"release"`)) ||
 
-                 (`${{ github.event.inputs.check-r-devel-version-on-ubuntu }}` == 'true' &&
-                  contains(r, 'devel'))))]'
+                 (`${{ github.event.inputs.check-r-devel-version-on-ubuntu }}` == `"true"` &&
+                  contains(r, `"devel"`))))]'
 
   build-n-test:
     needs: matrix_prep
