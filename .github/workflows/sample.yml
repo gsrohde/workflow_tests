@@ -34,11 +34,7 @@ jobs:
         name: Conditional Build Matrix
         uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
         with:          
-          filter: |
-            '[?contains(runOnEvent,`${{ github.event_name }}`) ||
-
-               (`${{ github.event.inputs.check-windows }}` == `"true"` &&
-                contains(os, `"windows"`))]'
+          filter: '[?contains(runOnEvent,`${{ github.event_name }}`) || (`${{ github.event.inputs.check-windows }}` == `"true"` && contains(os, `"windows"`))]'
   display_matrix:
     needs: matrix_prep
     runs-on: ubuntu-latest
