@@ -34,13 +34,13 @@ jobs:
         name: Conditional Build Matrix
         uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
         with:          
-          filter: >
-            [?contains(runOnEvent, `${{ github.event_name }}`)
-              || (contains(os, `"windows"`) && `${{ github.event.inputs.check-windows }}` == `true`)
-              || (contains(os, `"macOS"`) && `${{ github.event.inputs.check-mac }}` == `true`)
-              || (contains(os, `"ubuntu"`)
-                  && ((contains(r, `"release"`) && `${{ github.event.inputs.check-r-release-version-on-ubuntu }}` == `true`)
-                      || (contains(r, `"devel"`) && `${{ github.event.inputs.check-r-devel-version-on-ubuntu }}` == `true`)))]
+          filter:
+            '[?contains(runOnEvent, `${{ github.event_name }}`)
+               || (contains(os, `"windows"`) && `${{ github.event.inputs.check-windows }}` == `true`)
+               || (contains(os, `"macOS"`) && `${{ github.event.inputs.check-mac }}` == `true`)
+               || (contains(os, `"ubuntu"`)
+                   && ((contains(r, `"release"`) && `${{ github.event.inputs.check-r-release-version-on-ubuntu }}` == `true`)
+                       || (contains(r, `"devel"`) && `${{ github.event.inputs.check-r-devel-version-on-ubuntu }}` == `true`)))]'
 
   display_matrix:
     needs: matrix_prep
