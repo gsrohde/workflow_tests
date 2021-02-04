@@ -60,6 +60,7 @@ jobs:
 
   build-n-test:
     if: >
+      github.event_name != 'workflow_dispatch' ||
       github.event.inputs.check-windows == 'true' ||
       github.event.inputs.check-mac == 'true' ||
       github.event.inputs.check-r-release-version-on-ubuntu == 'true' ||
