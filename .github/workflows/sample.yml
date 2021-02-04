@@ -9,19 +9,19 @@ on:
       check-windows:
         description: 'Test build on Windows'
         required: false
-        default: 'true'
+        default: 'false'
       check-mac:
         description: 'Test build on MacOS'
         required: false
-        default: 'true'
+        default: 'false'
       check-r-release-version-on-ubuntu:
         description: 'Check on Ubuntu using the release version of R'
         required: false
-        default: 'true'
+        default: 'false'
       check-r-devel-version-on-ubuntu:
         description: 'Check on Ubuntu using the development version of R'
         required: false
-        default: 'true'
+        default: 'false'
 
 jobs:
   matrix_prep:
@@ -44,8 +44,8 @@ jobs:
              (contains(os, `"ubuntu"`)
                 &&
               ((`${{ github.event.inputs.check-r-release-version-on-ubuntu }}` == `true` && contains(r, `"release"`))
-                ||
-              (`${{ github.event.inputs.check-r-devel-version-on-ubuntu }}` == `true` && contains(r, `"devel"`))))]
+                  ||
+               (`${{ github.event.inputs.check-r-devel-version-on-ubuntu }}` == `true` && contains(r, `"devel"`))))]
 
   display_matrix:
     needs: matrix_prep
@@ -59,6 +59,11 @@ jobs:
         echo "matrix: $MATRIX_CONTEXT"
 
   build-n-test:
+    if: >
+      github.event.inputs.check-windows == 'true' ||
+      github.event.inputs.check-mac == 'true' ||
+      github.event.inputs.check-r-release-version-on-ubuntu == 'true' ||
+      github.event.inputs.check-r-devel-version-on-ubuntu == 'true'
     needs: matrix_prep
     runs-on: ${{ matrix.os }}
     strategy:
