@@ -2,21 +2,21 @@
     {
         "os":"windows-latest",
         "r":"release",
-        "runOnEvent":"workflow_dispatch"
+        "runOnEvent":["pull_request"]
     },
     {
         "os":"macOS-latest",
         "r":"release",
-        "runOnEvent":"workflow_dispatch"
+        "runOnEvent":["pull_request"]
     },
     {
         "os":"ubuntu-20.04",
         "r":"release",
-        "runOnEvent":"always"
+        "runOnEvent":["pull_request","push"]
     },
     {
         "os":"ubuntu-20.04",
         "r":"devel",
-        "runOnEvent":"workflow_dispatch"
+        "runOnEvent":["pull_request"]
     }
 ]
