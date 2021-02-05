@@ -38,4 +38,6 @@ jobs:
         run: |
           echo "EQ = $EQ"
           echo "The value of EQ is ${{ env.EQ }}."
+          echo "matrix b = ${{ matrix.b }}."
+          echo "github.events.inputs.a = ${{ github.events.inputs.a }}."
       
