@@ -1,4 +1,6 @@
-name: Test Environment Variable Usage
+# See https://stackoverflow.com/questions/65384420/how-to-make-a-github-action-matrix-element-conditional
+
+name: Configurable Build Matrix 2
 
 on:
   #push:
@@ -22,17 +24,50 @@ on:
         default: 'false'
 
 jobs:
-  ## strategy:
-  ##   matrix:
-  ##     b: [1, 2, 3, 4]
-  variable-passing:
+  matrix_prep:
     runs-on: ubuntu-latest
-
-    env:
-      ## EQ: strategy.matrix.b == github.events.inputs.a
-      EQ: ${{ github.events.inputs.a }}
-
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - name: Use Environment Variable
-        if: env.EQ == 3
-        run: echo "The input equals the b matrix value."
+      - uses: actions/checkout@v2
+      - id: set-matrix
+        name: Conditional Build Matrix
+        uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
+        with:          
+          filter:
+            '[?contains(runOnEvent, `${{ github.event_name }}`)
+               || (contains(os, `"windows"`) && `${{ github.event.inputs.check-windows }}` == `true`)
+               || (contains(os, `"macOS"`) && `${{ github.event.inputs.check-mac }}` == `true`)
+               || (contains(os, `"ubuntu"`)
+                   && ((contains(r, `"release"`) && `${{ github.event.inputs.check-r-release-version-on-ubuntu }}` == `true`)
+                       || (contains(r, `"devel"`) && `${{ github.event.inputs.check-r-devel-version-on-ubuntu }}` == `true`)))]'
+
+  display_matrix:
+    needs: matrix_prep
+    runs-on: ubuntu-latest
+    steps:    
+    - name: Report Configuration
+      env:
+        MATRIX_CONTEXT: ${{ needs.matrix_prep.outputs.matrix }}
+      run: |
+        echo "os: " ${{ matrix.os }}
+        echo "matrix: $MATRIX_CONTEXT"
+
+  build-n-test:
+    if: >
+      github.event_name != 'workflow_dispatch' ||
+      github.event.inputs.check-windows == 'true' ||
+      github.event.inputs.check-mac == 'true' ||
+      github.event.inputs.check-r-release-version-on-ubuntu == 'true' ||
+      github.event.inputs.check-r-devel-version-on-ubuntu == 'true'
+    needs: matrix_prep
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
+    steps:
+    - name: Report Configuration
+      env:
+        MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+      run: |
+        echo "os: " ${{ matrix.os }}
+        echo "matrix: $MATRIX_CONTEXT"
