@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Set Enviroment Variable
         run: |
-          echo "EQ=${{ matrix.b == github.events.inputs.a }}" >> $GITHUB_ENV
+          echo "EQ=${{ matrix.b == github.event.inputs.a }}" >> $GITHUB_ENV
       
       - name: Use Environment Variable
         if: env.EQ == 'true'
@@ -30,7 +30,7 @@ jobs:
           echo "The input equals the b matrix value."
           echo "The value of EQ is ${{ env.EQ }}."
       - name: Direct Usage
-        if: (matrix.b == github.events.inputs.a) == true
+        if: (matrix.b == github.event.inputs.a) == true
         run: |
           echo "The input equals the b matrix value."
           echo "The value of EQ is ${{ env.EQ }}."
@@ -39,5 +39,5 @@ jobs:
           echo "EQ = $EQ"
           echo "The value of EQ is ${{ env.EQ }}."
           echo "matrix b = ${{ matrix.b }}."
-          echo "github.events.inputs.a = ${{ github.events.inputs.a }}."
+          echo "github.event.inputs.a = ${{ github.event.inputs.a }}."
       
