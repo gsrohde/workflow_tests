@@ -1,3 +1,5 @@
+name: Test Environment Variable Usage
+
 on: 
   workflow_dispatch:
     inputs:
