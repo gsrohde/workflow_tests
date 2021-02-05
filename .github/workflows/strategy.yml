@@ -9,18 +9,14 @@ on:
         default: '4'
 
 jobs:
-  strategy:
-    matrix:
-      include:
-        - b: 1
-        - b: 2
-        - b: 3
-        - b: 4
   variable-passing:
+    strategy:
+      matrix:
+        b: [1, 2, 3, 4]
+
     name: Variable Passing with b = ${{ matrix.b }}
 
     runs-on: ubuntu-latest
-
 
     steps:
       - name: Set Enviroment Variable
