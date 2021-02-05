@@ -3,7 +3,7 @@
 name: Configurable Build Matrix
 
 on:
-  push:
+  #push:
   workflow_dispatch:
     inputs:
       check-windows:
