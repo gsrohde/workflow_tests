@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Use Environment Variable
-        if: EQ == '3'
+        if: env.EQ == '3'
         run: echo "The input equals the b matrix value."
 
       - name: Direct Usage
