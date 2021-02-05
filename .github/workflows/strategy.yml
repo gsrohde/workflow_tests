@@ -1,39 +1,26 @@
+name: Test Environment Variable Usage
+
 on:
-  #push:
   workflow_dispatch:
     inputs:
-      sample-input:
-        description: 'some string'
-        default: 'hiya'
+      a:
+        description: 'Enter a number from 1 to 4:'
+        required: false
+        default: '4'
+  push:
+
 jobs:
-  R-CMD-check:
-    runs-on: ubuntu-20.04
-
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
-
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - {os: windows-latest, r: 'release'}
-          - {os: macOS-latest, r: 'release'}
-          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+  ## strategy:
+  ##   matrix:
+  ##     b: [1, 2, 3, 4]
+  variable-passing:
+    runs-on: ubuntu-latest
 
     env:
-      OS: ${{ matrix.config.os }}
+      ## EQ: strategy.matrix.b == github.events.inputs.a
+      EQ: ${{ github.events.inputs.a }}
 
-    if: startsWith(matrix.config.os, 'ubuntu-20.04')
     steps:
-      - name: Report Configuration
-        env:
-          GITHUB_EVENT: ${{ toJSON(github.event) }}
-          MATRIX_CONTEXT: ${{ toJSON(matrix) }}
-        run: |
-          echo "os: " ${{ matrix.config.os }}
-          echo "OS: $OS"
-          echo "r: " ${{ matrix.config.r }}
-          echo "rspm: " ${{ matrix.config.rspm }}
-          echo "github.event: $GITHUB_EVENT"
-          echo "sample-input: " ${{ github.event.inputs.sample-input }}
-          echo "matrix: $MATRIX_CONTEXT"
+      - name: Use Environment Variable
+        if: env.EQ == 3
+        run: echo "The input equals the b matrix value."
