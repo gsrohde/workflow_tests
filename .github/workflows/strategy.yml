@@ -19,15 +19,17 @@ jobs:
   variable-passing:
     runs-on: ubuntu-latest
 
-    env:
-      EQ: strategy.matrix.b == github.events.inputs.a
 
     steps:
+      - name: Set Enviroment Variable
+        run: |
+          echo "EQ=${{ strategy.matrix.b == github.events.inputs.a }}" >> $GITHUB_ENV
+      
       - name: Use Environment Variable
-        if: env.EQ == '3'
+        if: env.EQ == true
         run: echo "The input equals the b matrix value."
 
       - name: Direct Usage
-        if: github.event.inputs.a == '3'
+        if: (strategy.matrix.b == github.events.inputs.a) == true
         run: echo "The input equals the b matrix value."
       
