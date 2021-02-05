@@ -17,6 +17,8 @@ jobs:
         - b: 3
         - b: 4
   variable-passing:
+    name: Variable Passing with b = ${{ matrix.b }}
+
     runs-on: ubuntu-latest
 
 
