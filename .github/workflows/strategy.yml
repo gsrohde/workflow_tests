@@ -7,7 +7,6 @@ on:
         description: 'Enter a number from 1 to 4:'
         required: false
         default: '4'
-  push:
 
 jobs:
   ## strategy:
@@ -18,9 +17,14 @@ jobs:
 
     env:
       ## EQ: strategy.matrix.b == github.events.inputs.a
-      EQ: ${{ github.events.inputs.a }}
+      EQ: ${{ github.event.inputs.a }}
 
     steps:
       - name: Use Environment Variable
-        if: github.events.inputs.a == '3'
+        if: EQ == '3'
         run: echo "The input equals the b matrix value."
+
+      - name: Direct Usage
+        if: github.event.inputs.a == '3'
+        run: echo "The input equals the b matrix value."
+      
