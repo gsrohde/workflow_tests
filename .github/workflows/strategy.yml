@@ -9,15 +9,14 @@ on:
         default: '4'
 
 jobs:
-  ## strategy:
-  ##   matrix:
-  ##     b: [1, 2, 3, 4]
+  strategy:
+    matrix:
+      b: [1, 2, 3, 4]
   variable-passing:
     runs-on: ubuntu-latest
 
     env:
-      ## EQ: strategy.matrix.b == github.events.inputs.a
-      EQ: ${{ github.event.inputs.a }}
+      EQ: strategy.matrix.b == github.events.inputs.a
 
     steps:
       - name: Use Environment Variable
