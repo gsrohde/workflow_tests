@@ -1,0 +1,21 @@
+on: 
+  workflow_dispatch:
+    inputs:
+      a:
+        description: Enter a number from 1 to 4:
+  push:
+
+jobs:
+  strategy:
+    matrix:
+      b: [1, 2, 3, 4]
+  variable-passing:
+    runs-on: ubuntu-latest
+
+    env:
+      EQ: strategy.matrix.b == github.events.inputs.a
+
+    steps:
+      - name: Use Environment Variable
+        if: EQ
+        run: echo "The input equals the b matrix value."
