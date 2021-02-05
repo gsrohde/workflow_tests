@@ -4,6 +4,7 @@ on:
       a:
         description: 'Enter a number from 1 to 4:'
         required: false
+        default: 4
   push:
 
 jobs:
