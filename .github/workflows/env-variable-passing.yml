@@ -1,0 +1,66 @@
+name: Test Environment Variable Passing
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    # When running manually, allow users to customize the run:
+    inputs:
+      check-manual:
+        description: 'check the manual'
+        required: false
+        default: 'true'
+      check-vignettes:
+        description: 'check the vignettes'
+        required: false
+        default: 'true'
+      run-tests:
+        description: 'run the tests'
+        required: false
+        default: 'true'
+      check-examples:
+        description: 'check the examples'
+        required: false
+        default: 'true'
+      check-windows:
+        description: 'Test build on Windows'
+        required: false
+        default: 'false'
+      check-mac:
+        description: 'Test build on MacOS'
+        required: false
+        default: 'false'
+      check-r-release-version-on-ubuntu:
+        description: 'Check on Ubuntu using the release version of R'
+        required: false
+        default: 'false'
+      check-r-devel-version-on-ubuntu:
+        description: 'Check on Ubuntu using the development version of R'
+        required: false
+        default: 'false'
+
+jobs:
+  variable-passing:
+
+    name: Variable Passing with b = ${{ matrix.b }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set Enviroment Variable
+        run: |
+          echo "EQ=${{github.event_name != 'workflow_dispatch' ||
+                      github.event.inputs.check-vignettes == 'true' ||
+                      github.event.inputs.check-manual == 'true'}}" >> $GITHUB_ENV
+      
+      - name: Use Environment Variable
+        if: env.EQ == 'true'
+        run: |
+          echo "The value of EQ is ${{ env.EQ }}."
+      - name: Debug
+        run: |
+          echo "EQ = $EQ"
+          echo "The value of EQ is ${{ env.EQ }}."
+          echo "github.event_name = ${{ github.event_name }}."
+          echo "github.event.inputs.check-vignettes = ${{ github.event.inputs.check-vignettes }}."
+          echo "github.event.inputs.check-manual = ${{ github.event.inputs.check-manual }}."
