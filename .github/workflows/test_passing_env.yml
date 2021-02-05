@@ -3,6 +3,7 @@ on:
     inputs:
       a:
         description: 'Enter a number from 1 to 4:'
+        required: false
   push:
 
 jobs:
