@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
     inputs:
       a:
-        description: Enter a number from 1 to 4:
+        description: 'Enter a number from 1 to 4:'
   push:
 
 jobs:
