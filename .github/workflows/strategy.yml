@@ -11,7 +11,7 @@ on:
 jobs:
   strategy:
     matrix:
-      b: [1, 2, 3, 4]
+      b: ['1', '2', '3', '4']
   variable-passing:
     runs-on: ubuntu-latest
 
