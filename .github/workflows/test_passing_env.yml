@@ -1,13 +1,25 @@
 name: Test Environment Variable Usage
 
 on:
+  #push:
   workflow_dispatch:
     inputs:
-      a:
-        description: 'Enter a number from 1 to 4:'
+      check-windows:
+        description: 'Test build on Windows'
         required: false
-        default: '4'
-  push:
+        default: 'false'
+      check-mac:
+        description: 'Test build on MacOS'
+        required: false
+        default: 'false'
+      check-r-release-version-on-ubuntu:
+        description: 'Check on Ubuntu using the release version of R'
+        required: false
+        default: 'false'
+      check-r-devel-version-on-ubuntu:
+        description: 'Check on Ubuntu using the development version of R'
+        required: false
+        default: 'false'
 
 jobs:
   ## strategy:
