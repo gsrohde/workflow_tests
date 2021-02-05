@@ -11,7 +11,11 @@ on:
 jobs:
   strategy:
     matrix:
-      b: ['1', '2', '3', '4']
+      include:
+        - b: 1
+        - b: 2
+        - b: 3
+        - b: 4
   variable-passing:
     runs-on: ubuntu-latest
 
