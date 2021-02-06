@@ -9,11 +9,11 @@ on:
       check-manual:
         description: 'check the manual'
         required: false
-        default: 'x'
+        default: ''
       check-vignettes:
         description: 'check the vignettes'
         required: false
-        default: 'x'
+        default: ''
       run-tests:
         description: 'run the tests'
         required: false
