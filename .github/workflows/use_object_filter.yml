@@ -45,6 +45,9 @@ jobs:
         if: env.EQ == 'true'
         run: |
           echo "The value of EQ is ${{ env.EQ }}."
+      - name: Debug
+        run: |
+          echo "EQ = $EQ"
 
 
 
