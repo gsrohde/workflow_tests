@@ -1,4 +1,4 @@
-name: Test Blank Input
+name: Object Filter
 
 on:
   push:
