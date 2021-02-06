@@ -54,7 +54,7 @@ jobs:
           echo "github.event.inputs.check-manual = ${{ github.event.inputs.check-manual }}."
           echo "github.event.inputs.run-tests = ${{ github.event.inputs.run-tests }}."
           echo "github.event.inputs.check-examples = ${{ github.event.inputs.check-examples }}."
-          echo "contains(fromJSON('[ \"yes\", \"y\" ]'), github.event.inputs.check-manual) = ${{ contains(fromJSON('[ \"yes\", \"y\" ]'), github.event.inputs.check-manual) }}."
+          echo "${{ contains(fromJSON('[ \"yes\", \"y\" ]'), github.event.inputs.check-manual) }}."
 
       - name: Dry Run
         run: |
