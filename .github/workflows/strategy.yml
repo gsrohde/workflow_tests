@@ -1,7 +1,7 @@
 name: Test Environment Variable Usage
 
 on:
-  push:
+  #push:
   workflow_dispatch:
     inputs:
       a:

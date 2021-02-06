@@ -1,7 +1,7 @@
 name: Test Environment Variable Passing
 
 on:
-  push:
+  #push:
   pull_request:
   workflow_dispatch:
     # When running manually, allow users to customize the run:
