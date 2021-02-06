@@ -91,7 +91,7 @@ jobs:
             if (!run_tests) {
               args_value <- append(args_value, '--no-tests')
             }
-            if (!check_examples( {
+            if (!check_examples) {
               args_value <- append(args_value, '--no-examples')
             }
           } else {
