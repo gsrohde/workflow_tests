@@ -48,6 +48,12 @@ jobs:
       - name: Debug
         run: |
           echo "EQ = $EQ"
+          echo "The value of EQ is ${{ env.EQ }}."
+          echo "github.event_name = ${{ github.event_name }}."
+          echo "github.event.inputs.check-vignettes = ${{ github.event.inputs.check-vignettes }}."
+          echo "github.event.inputs.check-manual = ${{ github.event.inputs.check-manual }}."
+          echo "github.event.inputs.run-tests = ${{ github.event.inputs.run-tests }}."
+          echo "github.event.inputs.check-examples = ${{ github.event.inputs.check-examples }}."
 
 
 
