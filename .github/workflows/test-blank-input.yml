@@ -1,4 +1,4 @@
-name: Test Environment Variable Passing
+name: Test Blank Input
 
 on:
   push:
