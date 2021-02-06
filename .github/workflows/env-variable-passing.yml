@@ -22,27 +22,11 @@ on:
         description: 'check the examples'
         required: false
         default: 'true'
-      check-windows:
-        description: 'Test build on Windows'
-        required: false
-        default: 'false'
-      check-mac:
-        description: 'Test build on MacOS'
-        required: false
-        default: 'false'
-      check-r-release-version-on-ubuntu:
-        description: 'Check on Ubuntu using the release version of R'
-        required: false
-        default: 'false'
-      check-r-devel-version-on-ubuntu:
-        description: 'Check on Ubuntu using the development version of R'
-        required: false
-        default: 'false'
 
 jobs:
   variable-passing:
 
-    name: Variable Passing with b = ${{ matrix.b }}
+    name: Variable Passing
 
     runs-on: ubuntu-latest
 
