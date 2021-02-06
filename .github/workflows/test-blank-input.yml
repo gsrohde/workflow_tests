@@ -7,21 +7,25 @@ on:
     # When running manually, allow users to customize the run:
     inputs:
       check-manual:
-        description: 'check the manual'
+        description: 'Check the manual (yes/no)'
         required: false
-        default: ''
+        default: 'no'
       check-vignettes:
-        description: 'check the vignettes'
+        description: 'Check the vignettes (yes/no)'
         required: false
-        default: ''
+        default: 'no'
       run-tests:
-        description: 'run the tests'
+        description: 'Run the tests (yes/no)'
         required: false
-        default: 'x'
+        default: 'yes'
       check-examples:
-        description: 'check the examples'
+        description: 'Check the examples (yes/no)'
         required: false
-        default: 'x'
+        default: 'yes'
+
+env:
+  yes-values: ['yes', 'y']
+  no-values: ['no', 'n']
 
 jobs:
   variable-passing:
@@ -33,9 +37,9 @@ jobs:
     steps:
       - name: Set Enviroment Variable
         run: |
-          echo "EQ=${{github.event_name != 'workflow_dispatch' ||
-                      github.event.inputs.check-vignettes != '' ||
-                      github.event.inputs.check-manual != ''}}" >> $GITHUB_ENV
+          echo "EQ=${{ github.event_name != 'workflow_dispatch' ||
+                       contains(env.yes-values.*, github.event.inputs.check-vignettes) ||
+                       contains(env.yes-values.*, github.event.inputs.check-manual }}" >> $GITHUB_ENV
       
       - name: Use Environment Variable
         if: env.EQ == 'true'
@@ -53,21 +57,41 @@ jobs:
 
       - name: Dry Run
         run: |
+          # ad-hoc input testing function
+          is_aye <- function(x) {
+            if (!tolower(x) %in% c('y', 'n', 'yes', 'no') {
+              stop(paste(x, "is not a valid input value."))
+            }
+            tolower(x) %in% c('yes', 'y')
+          }
+
+          # Use input to set option arguments:
           if ('${{ github.event_name }}' == 'workflow_dispatch') {
+          
+            # Get convenience variables; if any input is not valid,
+            # run terminates:
+
+            check_manual <- is_aye('${{ github.event.inputs.check-manual }}')
+            check_vignettes <- is_aye('${{ github.event.inputs.check-vignettes }}')
+            run_tests <- is_aye('${{ github.event.inputs.run-tests }}')
+            check_examples <- is_aye('${{ github.event.inputs.check-examples }}')
+
+            # Construct rcmdcheck option values:
+            
             build_args_value <- c()
             args_value <- c('--as-cran')
-            if ('${{ github.event.inputs.check-manual }}' == '') {
+            if (!check_manual) {
               build_args_value <- append(build_args_value, '--no-manual')
               args_value <- append(args_value, '--no-manual')
             }
-            if ('${{ github.event.inputs.check-vignettes }}' == '') {
+            if (!check_vignettes) {
               build_args_value <- append(build_args_value, '--no-build-vignettes')
               args_value <- append(args_value, '--ignore-vignettes')
             }
-            if ('${{ github.event.inputs.run-tests }}' == '') {
+            if (!run_tests) {
               args_value <- append(args_value, '--no-tests')
             }
-            if ('${{ github.event.inputs.check-examples }}' == '') {
+            if (!check_examples( {
               args_value <- append(args_value, '--no-examples')
             }
           } else {
