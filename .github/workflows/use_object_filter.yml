@@ -54,11 +54,22 @@ jobs:
           echo "github.event.inputs.check-manual = ${{ github.event.inputs.check-manual }}."
           echo "github.event.inputs.run-tests = ${{ github.event.inputs.run-tests }}."
           echo "github.event.inputs.check-examples = ${{ github.event.inputs.check-examples }}."
-          echo "${{ contains(fromJSON('[ "yes", "y" ]'), github.event.inputs.check-manual) }}."
-          echo "${{ toJSON(env.decision-values) }}."
-          echo "${{ contains(fromJSON(env.decision-values).*.yes-value, 'Y') }}."
-          echo "${{ env.decision-values }}."
-
+          echo "${{ contains(fromJSON(env.decision-values).*.yes-value, github.event.inputs.check-vignettes) }}."
+          echo "${{ contains(fromJSON(env.decision-values).*.yes-value, github.event.inputs.check-manual) }}."
+          echo "${{ contains(fromJSON(env.decision-values).*.yes-value, github.event.inputs.run-tests) }}."
+          echo "${{ contains(fromJSON(env.decision-values).*.yes-value, github.event.inputs.check-examples) }}."
+          echo "${{ contains(fromJSON(env.decision-values).*.no-value, github.event.inputs.check-vignettes) }}."
+          echo "${{ contains(fromJSON(env.decision-values).*.no-value, github.event.inputs.check-manual) }}."
+          echo "${{ contains(fromJSON(env.decision-values).*.no-value, github.event.inputs.run-tests) }}."
+          echo "${{ contains(fromJSON(env.decision-values).*.no-value, github.event.inputs.check-examples) }}."
+          echo "${{ contains(fromJSON(env.yes-values), github.event.inputs.check-vignettes) }}."
+          echo "${{ contains(fromJSON(env.yes-values), github.event.inputs.check-manual) }}."
+          echo "${{ contains(fromJSON(env.yes-values), github.event.inputs.run-tests) }}."
+          echo "${{ contains(fromJSON(env.yes-values), github.event.inputs.check-examples) }}."
+          echo "${{ contains(fromJSON(env.no-values), github.event.inputs.check-vignettes) }}."
+          echo "${{ contains(fromJSON(env.no-values), github.event.inputs.check-manual) }}."
+          echo "${{ contains(fromJSON(env.no-values), github.event.inputs.run-tests) }}."
+          echo "${{ contains(fromJSON(env.no-values), github.event.inputs.check-examples) }}."
       - name: Dry Run
         run: |
           # ad-hoc input testing function
