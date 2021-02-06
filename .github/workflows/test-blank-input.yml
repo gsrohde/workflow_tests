@@ -23,9 +23,6 @@ on:
         required: false
         default: 'yes'
 
-env:
-  yes-values: ['yes', 'y']
-  no-values: ['no', 'n']
 
 jobs:
   variable-passing:
@@ -38,8 +35,11 @@ jobs:
       - name: Set Enviroment Variable
         run: |
           echo "EQ=${{ github.event_name != 'workflow_dispatch' ||
-                       contains(env.yes-values.*, github.event.inputs.check-vignettes) ||
-                       contains(env.yes-values.*, github.event.inputs.check-manual }}" >> $GITHUB_ENV
+                       github.event.inputs.check-vignettes == 'yes' ||
+                       github.event.inputs.check-vignettes == 'y' ||
+                       github.event.inputs.check-manual == 'yes' ||
+                       github.event.inputs.check-manual == 'y'
+                     }}" >> $GITHUB_ENV
       
       - name: Use Environment Variable
         if: env.EQ == 'true'
