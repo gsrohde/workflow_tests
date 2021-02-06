@@ -1,0 +1,50 @@
+name: Test Environment Variable Passing
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    # When running manually, allow users to customize the run:
+    inputs:
+      check-manual:
+        description: 'check the manual'
+        required: false
+        default: 'x'
+      check-vignettes:
+        description: 'check the vignettes'
+        required: false
+        default: 'x'
+      run-tests:
+        description: 'run the tests'
+        required: false
+        default: 'x'
+      check-examples:
+        description: 'check the examples'
+        required: false
+        default: 'x'
+
+jobs:
+  variable-passing:
+
+    name: Variable Passing
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set Enviroment Variable
+        run: |
+          echo "EQ=${{github.event_name != 'workflow_dispatch' ||
+                      github.event.inputs.check-vignettes != '' ||
+                      github.event.inputs.check-manual != ''}}" >> $GITHUB_ENV
+      
+      - name: Use Environment Variable
+        if: env.EQ == 'true'
+        run: |
+          echo "The value of EQ is ${{ env.EQ }}."
+      - name: Debug
+        run: |
+          echo "EQ = $EQ"
+          echo "The value of EQ is ${{ env.EQ }}."
+          echo "github.event_name = ${{ github.event_name }}."
+          echo "github.event.inputs.check-vignettes = ${{ github.event.inputs.check-vignettes }}."
+          echo "github.event.inputs.check-manual = ${{ github.event.inputs.check-manual }}."
