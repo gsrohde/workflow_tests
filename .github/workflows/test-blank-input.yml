@@ -59,7 +59,7 @@ jobs:
         run: |
           # ad-hoc input testing function
           is_aye <- function(x) {
-            if (!tolower(x) %in% c('y', 'n', 'yes', 'no') {
+            if (!tolower(x) %in% c('y', 'n', 'yes', 'no')) {
               stop(paste(x, "is not a valid input value."))
             }
             tolower(x) %in% c('yes', 'y')
