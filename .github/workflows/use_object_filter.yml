@@ -56,6 +56,8 @@ jobs:
           echo "github.event.inputs.check-examples = ${{ github.event.inputs.check-examples }}."
           echo "${{ contains(fromJSON('[ "yes", "y" ]'), github.event.inputs.check-manual) }}."
           echo "${{ toJSON(env.decision-values) }}."
+          echo "${{ fromJSON(env.decision-values) }}."
+          echo "${{ env.decision-values }}."
 
       - name: Dry Run
         run: |
