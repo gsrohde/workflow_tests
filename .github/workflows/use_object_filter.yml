@@ -38,8 +38,8 @@ jobs:
       - name: Set Enviroment Variable
         run: |
           echo "EQ=${{ github.event_name != 'workflow_dispatch' ||
-                       contains(fromJSON(env.decision-values.*.yes-value), github.event.inputs.check-vignettes) ||
-                       contains(fromJSON(env.decision-values.*.yes-value), github.event.inputs.check-manual) }}" >> $GITHUB_ENV
+                       contains(fromJSON(env.decision-values).*.yes-value, github.event.inputs.check-vignettes) ||
+                       contains(fromJSON(env.decision-values).*.yes-value, github.event.inputs.check-manual) }}" >> $GITHUB_ENV
       
       - name: Use Environment Variable
         if: env.EQ == 'true'
