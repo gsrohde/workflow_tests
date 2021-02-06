@@ -24,11 +24,9 @@ on:
         default: 'yes'
 
 env:
-  yes-value: 'yes'
-  yes-value: 'y'
-  #no-value: 'no'
-  #no-value: 'n'
-
+  decision-values: '[ { "yes-value": "yes" }, { "yes-value": "y" }, { "no-value": "no" }, { "no-value": "n" } ]'
+  yes-values: '[ "yes", "y" ]'
+  no-values: '[ "no", "n" ]'
 jobs:
   variable-passing:
 
@@ -40,8 +38,8 @@ jobs:
       - name: Set Enviroment Variable
         run: |
           echo "EQ=${{ github.event_name != 'workflow_dispatch' ||
-                       contains(env.yes-value.*, github.event.inputs.check-vignettes) ||
-                       contains(env.yes-value.*, github.event.inputs.check-manual }}" >> $GITHUB_ENV
+                       contains(fromJSON(env.decision-values.*.yes-value), github.event.inputs.check-vignettes) ||
+                       contains(fromJSON(env.decision-values.*.yes-value), github.event.inputs.check-manual) }}" >> $GITHUB_ENV
       
       - name: Use Environment Variable
         if: env.EQ == 'true'
@@ -56,6 +54,10 @@ jobs:
           echo "github.event.inputs.check-manual = ${{ github.event.inputs.check-manual }}."
           echo "github.event.inputs.run-tests = ${{ github.event.inputs.run-tests }}."
           echo "github.event.inputs.check-examples = ${{ github.event.inputs.check-examples }}."
+          echo "contains(fromJSON(env.decision-values.*.yes-value), github.event.inputs.check-manual) = ${{ contains(fromJSON(env.decision-values.*.yes-value), github.event.inputs.check-manual) }}."
+          echo "contains(fromJSON(env.decision-values.*.no-value), github.event.inputs.check-manual) = ${{ contains(fromJSON(env.decision-values.*.no-value), github.event.inputs.check-manual) }}."
+          echo "contains(fromJSON(env.yes-values), github.event.inputs.check-manual) = ${{ contains(fromJSON(env.yes-values), github.event.inputs.check-manual) }}."
+          echo "contains(fromJSON(env.no-values), github.event.inputs.check-manual) = ${{ contains(fromJSON(env.no-values), github.event.inputs.check-manual) }}."
 
       - name: Dry Run
         run: |
