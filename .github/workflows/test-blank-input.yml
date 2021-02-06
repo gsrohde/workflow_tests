@@ -16,10 +16,12 @@ on:
         default: ''
       run-tests:
         description: 'run the tests'
-        required: true
+        required: false
+        default: 'x'
       check-examples:
         description: 'check the examples'
         required: false
+        default: 'x'
 
 jobs:
   variable-passing:
