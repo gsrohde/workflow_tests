@@ -1,0 +1,112 @@
+name: Test Blank Input
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    # When running manually, allow users to customize the run:
+    inputs:
+      check-manual:
+        description: 'Check the manual (yes/no)'
+        required: false
+        default: 'no'
+      check-vignettes:
+        description: 'Check the vignettes (yes/no)'
+        required: false
+        default: 'no'
+      run-tests:
+        description: 'Run the tests (yes/no)'
+        required: false
+        default: 'yes'
+      check-examples:
+        description: 'Check the examples (yes/no)'
+        required: false
+        default: 'yes'
+
+env:
+  yes-value: 'yes'
+  yes-value: 'y'
+  #no-value: 'no'
+  #no-value: 'n'
+
+jobs:
+  variable-passing:
+
+    name: Variable Passing
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set Enviroment Variable
+        run: |
+          echo "EQ=${{ github.event_name != 'workflow_dispatch' ||
+                       contains(env.yes-value.*, github.event.inputs.check-vignettes) ||
+                       contains(env.yes-value.*, github.event.inputs.check-manual }}" >> $GITHUB_ENV
+      
+      - name: Use Environment Variable
+        if: env.EQ == 'true'
+        run: |
+          echo "The value of EQ is ${{ env.EQ }}."
+      - name: Debug
+        run: |
+          echo "EQ = $EQ"
+          echo "The value of EQ is ${{ env.EQ }}."
+          echo "github.event_name = ${{ github.event_name }}."
+          echo "github.event.inputs.check-vignettes = ${{ github.event.inputs.check-vignettes }}."
+          echo "github.event.inputs.check-manual = ${{ github.event.inputs.check-manual }}."
+          echo "github.event.inputs.run-tests = ${{ github.event.inputs.run-tests }}."
+          echo "github.event.inputs.check-examples = ${{ github.event.inputs.check-examples }}."
+
+      - name: Dry Run
+        run: |
+          # ad-hoc input testing function
+          is_aye <- function(x) {
+            if (!tolower(x) %in% c('y', 'n', 'yes', 'no')) {
+              stop(paste(x, "is not a valid input value."))
+            }
+            tolower(x) %in% c('yes', 'y')
+          }
+
+          # Use input to set option arguments:
+          if ('${{ github.event_name }}' == 'workflow_dispatch') {
+          
+            # Get convenience variables; if any input is not valid,
+            # run terminates:
+
+            check_manual <- is_aye('${{ github.event.inputs.check-manual }}')
+            check_vignettes <- is_aye('${{ github.event.inputs.check-vignettes }}')
+            run_tests <- is_aye('${{ github.event.inputs.run-tests }}')
+            check_examples <- is_aye('${{ github.event.inputs.check-examples }}')
+
+            # Construct rcmdcheck option values:
+            
+            build_args_value <- c()
+            args_value <- c('--as-cran')
+            if (!check_manual) {
+              build_args_value <- append(build_args_value, '--no-manual')
+              args_value <- append(args_value, '--no-manual')
+            }
+            if (!check_vignettes) {
+              build_args_value <- append(build_args_value, '--no-build-vignettes')
+              args_value <- append(args_value, '--ignore-vignettes')
+            }
+            if (!run_tests) {
+              args_value <- append(args_value, '--no-tests')
+            }
+            if (!check_examples) {
+              args_value <- append(args_value, '--no-examples')
+            }
+          } else {
+            build_args_value <- c('--no-build-vignettes')
+            args_value <- c('--as-cran', '--ignore-vignettes')
+          }
+          cat("Running rcmdcheck with",
+                "\n  args =", args_value,
+                "\n  build_args =", build_args_value,
+                "\n  error_on = 'error', and",
+                "\n  check_dir = 'check'\n")
+          ## rcmdcheck::rcmdcheck(args = args_value,
+          ##                      build_args = build_args_value,
+          ##                      error_on = "error",
+          ##                      check_dir = "check")
+        shell: Rscript {0}
