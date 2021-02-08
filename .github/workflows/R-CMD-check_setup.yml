@@ -181,7 +181,7 @@ jobs:
                 needs.get_configuration.outputs.check-manual }}"
       - name: Maybe install TinyTex
         if: >
-          needs.get_configuration.outputs.check-vignettes
+          needs.get_configuration.outputs.check-vignettes == 'true'
 
         run: echo "Need TinyTex"
       ## - name: Check package
