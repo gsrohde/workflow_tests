@@ -90,10 +90,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "${{ (contains(os, `"windows"`) && needs.get_configuration.outputs.check-windows) }}"
-          echo "${{ (contains(os, `"macOS"`) && needs.get_configuration.outputs.check-mac) }}"
-          echo "${{ (contains(r, `"release"`) && needs.get_configuration.outputs.check-r-release-version-on-ubuntu) }}"
-          echo "${{ (contains(r, `"devel"`) && needs.get_configuration.outputs.check-r-devel-version-on-ubuntu) }}"
+          echo "${{ needs.get_configuration.outputs.check-windows) }}"
+          echo "${{ needs.get_configuration.outputs.check-mac) }}"
+          echo "${{ needs.get_configuration.outputs.check-r-release-version-on-ubuntu) }}"
+          echo "${{ needs.get_configuration.outputs.check-r-devel-version-on-ubuntu) }}"
 
   matrix_prep:
     name: Prepare strategy matrix
