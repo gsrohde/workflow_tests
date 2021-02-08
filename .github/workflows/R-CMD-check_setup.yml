@@ -84,6 +84,17 @@ jobs:
           echo "::set-output name=check-r-release-version-on-ubuntu::${{ contains(fromJSON(env.yes-values), github.event.inputs.r-release-version-on-ubuntu) }}"
           echo "::set-output name=check-r-devel-version-on-ubuntu::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-r-devel-version-on-ubuntu) }}"
 
+  debug:
+    name: Debug
+    needs: get_configuration
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ (contains(os, `"windows"`) && needs.get_configuration.outputs.check-windows) }}"
+          echo "${{ (contains(os, `"macOS"`) && needs.get_configuration.outputs.check-mac) }}"
+          echo "${{ (contains(r, `"release"`) && needs.get_configuration.outputs.check-r-release-version-on-ubuntu) }}"
+          echo "${{ (contains(r, `"devel"`) && needs.get_configuration.outputs.check-r-devel-version-on-ubuntu) }}"
+
   matrix_prep:
     name: Prepare strategy matrix
     needs: get_configuration
