@@ -49,8 +49,6 @@ env:
   valid-input-values: '[ "yes", "y", "no", "n" ]'
   yes-values: '[ "yes", "y" ]'
   no-values: '[ "no", "n" ]'
-jobs:
-  variable-passing:
 
 jobs:
   get_configuration:
