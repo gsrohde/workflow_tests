@@ -54,8 +54,8 @@ jobs:
   get_configuration:
     name: Get run configuration
     runs-on: ubuntu-latest
-    #outputs:
-    #  check-manual: ${{ steps. .outputs.check-manual }}    
+    outputs:
+      check-manual: ${{ steps.set_outputs.outputs.check-manual }}    
 
     steps:
       - name: Validate Input
@@ -74,6 +74,7 @@ jobs:
         run: |
           echo "::error::All inputs must be either 'yes', 'y', 'no', or 'n'."
       - name: Set configuration variables
+        id: set_outputs
         run: |
           echo "::set-output name=check-manual::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-manual) }}"
           echo "::set-output name=check-vignettes::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-vignettes) }}"
