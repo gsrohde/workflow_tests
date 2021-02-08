@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       check-manual: ${{ steps.set_outputs.outputs.check-manual }}    
-
+      check-windows: ${{ steps.set_outputs.outputs.check-windows }}
     steps:
       - name: Validate Input
         run: |
