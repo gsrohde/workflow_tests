@@ -1,0 +1,12 @@
+on:
+  push:
+
+jobs:
+  job-A:
+    steps:
+      - name: First
+        run: |
+          echo "::error::Something went wrong"
+      - name: Second
+        run: |
+          echo "We got to the second step."
