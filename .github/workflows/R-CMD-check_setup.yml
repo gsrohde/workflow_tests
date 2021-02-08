@@ -61,14 +61,14 @@ jobs:
       - name: Validate Input
         run: |
           echo "ALL_INPUTS_VALID=${{
-            contains(env.valid-input-values), github.event.inputs.check-manual) &&
-            contains(env.valid-input-values), github.event.inputs.check-vignettes) &&
-            contains(env.valid-input-values), github.event.inputs.run-tests) &&
-            contains(env.valid-input-values), github.event.inputs.check-examples) &&
-            contains(env.valid-input-values), github.event.inputs.check-windows) &&
-            contains(env.valid-input-values), github.event.inputs.check-mac) &&
-            contains(env.valid-input-values), github.event.inputs.check-r-release-version-on-ubuntu) &&
-            contains(env.valid-input-values), github.event.inputs.check-r-devel-version-on-ubuntu)
+            contains(fromJSON(env.valid-input-values), github.event.inputs.check-manual) &&
+            contains(fromJSON(env.valid-input-values), github.event.inputs.check-vignettes) &&
+            contains(fromJSON(env.valid-input-values), github.event.inputs.run-tests) &&
+            contains(fromJSON(env.valid-input-values), github.event.inputs.check-examples) &&
+            contains(fromJSON(env.valid-input-values), github.event.inputs.check-windows) &&
+            contains(fromJSON(env.valid-input-values), github.event.inputs.check-mac) &&
+            contains(fromJSON(env.valid-input-values), github.event.inputs.check-r-release-version-on-ubuntu) &&
+            contains(fromJSON(env.valid-input-values), github.event.inputs.check-r-devel-version-on-ubuntu)
           }}" >> $GITHUB_ENV
       - name: Abort if invalid
         run: |
