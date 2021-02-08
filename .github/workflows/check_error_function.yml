@@ -1,14 +1,23 @@
 on:
-  push:
+  workflow-dispatch:
+    inputs:
+      yes-no-answer:
+        description: 'Say yes or no'
+        required: true
 
 jobs:
   job-A:
     runs-on: ubuntu-latest
     steps:
-      - name: First
+      - name: Validate
+        run: |
+          echo "VALID=${{ github.event.inputs.yes-no-answer == 'yes' || github.event.inputs.yes-no-answer == 'yes' }}" >> $GITHUB_ENV
+
+      - name: Abort if invalid
+        if: $VALID == 0
         run: |
           echo "::error::Something went wrong"
-          exit 0
-      - name: Second
+          exit 1
+      - name: Report value of VALID
         run: |
-          echo "We got to the second step."
+          echo "VALID = $VALID"
