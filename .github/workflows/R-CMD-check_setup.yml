@@ -56,7 +56,13 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       check-manual: ${{ steps.set_outputs.outputs.check-manual }}    
+      check-vignettes: ${{ steps.set_outputs.outputs.check-vignettes }}
+      run-tests: ${{ steps.set_outputs.outputs.run-tests }}    
+      check-examples: ${{ steps.set_outputs.outputs.check-examples }}
       check-windows: ${{ steps.set_outputs.outputs.check-windows }}
+      check-mac: ${{ steps.set_outputs.outputs.check-mac }}    
+      check-r-release-version-on-ubuntu: ${{ steps.set_outputs.outputs.check-r-release-version-on-ubuntu }}    
+      check-r-devel-version-on-ubuntu: ${{ steps.set_outputs.outputs.check-r-devel-version-on-ubuntu }}
     steps:
       - name: Validate Input
         run: |
