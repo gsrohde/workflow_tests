@@ -77,8 +77,10 @@ jobs:
             contains(fromJSON(env.valid-input-values), github.event.inputs.check-r-devel-version-on-ubuntu)
           }}" >> $GITHUB_ENV
       - name: Abort if invalid
+        if: github.event_name == 'workflow_dispatch' && env.ALL_INPUTS_VALID == 'false'
         run: |
           echo "::error::All inputs must be either 'yes', 'y', 'no', or 'n'."
+          exit 1
       - name: Set configuration variables
         id: set_outputs
         run: |
@@ -116,8 +118,8 @@ jobs:
         with:
           inputFile: '.github/workflows/matrix_includes_for_R-CMD-check.json'
           filter:
-            '[?contains(runOnEvent, `${{ github.event_name }}`)]'
-               ## || (contains(os, `"windows"`) && `${{ needs.get_configuration.outputs.check-windows) }}`
+            '[?contains(runOnEvent, `${{ github.event_name }}`)
+               || (contains(os, `"windows"`) && `${{ needs.get_configuration.outputs.check-windows) }}` == `true`]'
                ## || (contains(os, `"macOS"`) && `${{ needs.get_configuration.outputs.check-mac) }}`
                ## || (contains(os, `"ubuntu"`)
                ##     && ((contains(r, `"release"`) && `${{ needs.get_configuration.outputs.check-r-release-version-on-ubuntu) }}`
