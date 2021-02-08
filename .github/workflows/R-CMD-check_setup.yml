@@ -76,6 +76,12 @@ jobs:
             contains(fromJSON(env.valid-input-values), github.event.inputs.check-r-release-version-on-ubuntu) &&
             contains(fromJSON(env.valid-input-values), github.event.inputs.check-r-devel-version-on-ubuntu)
           }}" >> $GITHUB_ENV
+      - name: Debug validity check
+        run: |
+          echo "${{ github.event_name }}"
+          echo "${{ github.event_name == 'workflow_dispatch' }}"
+          echo "${{  env.ALL_INPUTS_VALID }}"
+          echo "${{  env.ALL_INPUTS_VALID == 'false' }}"
       - name: Abort if invalid
         if: github.event_name == 'workflow_dispatch' && env.ALL_INPUTS_VALID == 'false'
         run: |
