@@ -79,10 +79,14 @@ jobs:
           echo "::set-output name=check-vignettes::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-vignettes) }}"
           echo "::set-output name=run-tests::${{ contains(fromJSON(env.yes-values), github.event.inputs.run-tests) }}"
           echo "::set-output name=check-examples::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-examples) }}"
+          echo "::set-output name=check-windows::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-windows) }}"
+          echo "::set-output name=check-mac::${{ contains(fromJSON(env.yes-values), github.event.inputs.mac) }}"
+          echo "::set-output name=check-r-release-version-on-ubuntu::${{ contains(fromJSON(env.yes-values), github.event.inputs.r-release-version-on-ubuntu) }}"
+          echo "::set-output name=check-r-devel-version-on-ubuntu::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-r-devel-version-on-ubuntu) }}"
 
   matrix_prep:
     name: Prepare strategy matrix
-    needs: get_configuration # Don't bother with this job if configuration is invalid. 
+    needs: get_configuration
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -95,11 +99,11 @@ jobs:
           inputFile: '.github/workflows/matrix_includes_for_R-CMD-check.json'
           filter:
             '[?contains(runOnEvent, `${{ github.event_name }}`)
-               || (contains(os, `"windows"`) && `${{ github.event.inputs.check-windows }}` == `true`)
-               || (contains(os, `"macOS"`) && `${{ github.event.inputs.check-mac }}` == `true`)
+               || (contains(os, `"windows"`) && needs.get_configuration.outputs.check-windows)
+               || (contains(os, `"macOS"`) && needs.get_configuration.outputs.check-mac)
                || (contains(os, `"ubuntu"`)
-                   && ((contains(r, `"release"`) && `${{ github.event.inputs.check-r-release-version-on-ubuntu }}` == `true`)
-                       || (contains(r, `"devel"`) && `${{ github.event.inputs.check-r-devel-version-on-ubuntu }}` == `true`)))]'
+                   && ((contains(r, `"release"`) && needs.get_configuration.outputs.check-r-release-version-on-ubuntu)
+                       || (contains(r, `"devel"`) && needs.get_configuration.outputs.check-r-devel-version-on-ubuntu)))]'
 
   # For debugging:
   display_matrix:
@@ -119,7 +123,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
+      matrix: ${{ fromJSON(needs.matrix_prep.outputs.matrix) }}
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true # affects behavior of the "remotes" package's install commands
       RSPM: ${{ matrix.rspm }}
