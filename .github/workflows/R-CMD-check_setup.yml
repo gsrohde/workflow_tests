@@ -176,7 +176,9 @@ jobs:
           echo "${{ github.event_name != 'workflow_dispatch' }}"
           echo "${{ needs.get_configuration.outputs.check-vignettes }}"
           echo "${{ needs.get_configuration.outputs.check-manual }}"
-
+          echo "${{ github.event_name != 'workflow_dispatch' ||
+                needs.get_configuration.outputs.check-vignettes ||
+                needs.get_configuration.outputs.check-manual }}"
       - name: Maybe install TinyTex
         if: ${{ github.event_name != 'workflow_dispatch' ||
                 needs.get_configuration.outputs.check-vignettes ||
