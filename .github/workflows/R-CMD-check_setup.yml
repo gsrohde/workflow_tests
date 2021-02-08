@@ -182,8 +182,7 @@ jobs:
       - name: Maybe install TinyTex
         if: >
           github.event_name != 'workflow_dispatch'
-          #|| needs.get_configuration.outputs.check-vignettes
-          #|| needs.get_configuration.outputs.check-manual
+
         run: echo "Need TinyTex"
       ## - name: Check package
       ##   run: |
