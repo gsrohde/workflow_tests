@@ -3,6 +3,7 @@ on:
 
 jobs:
   job-A:
+    runs-on: ubuntu-latest
     steps:
       - name: First
         run: |
