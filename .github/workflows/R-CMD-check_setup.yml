@@ -177,14 +177,9 @@ jobs:
           echo "${{ needs.get_configuration.outputs.check-vignettes }}"
           echo "${{ needs.get_configuration.outputs.check-manual }}"
           echo "${{ github.event_name != 'workflow_dispatch' ||
-                needs.get_configuration.outputs.check-vignettes ||
-                needs.get_configuration.outputs.check-manual }}"
-          echo "${{ github.event_name != 'workflow_dispatch' ||
                 needs.get_configuration.outputs.check-vignettes == 'true' ||
                 needs.get_configuration.outputs.check-manual == 'true' }}"
-          echo "${{ github.event_name != 'workflow_dispatch' ||
-                fromJSON(needs.get_configuration.outputs.check-vignettes) ||
-                fromJSON(needs.get_configuration.outputs.check-manual) }}"
+          echo "${{ 'a' == 'b' || 'c' }}"
       - name: Maybe install TinyTex
         if: >
           github.event_name != 'workflow_dispatch'
