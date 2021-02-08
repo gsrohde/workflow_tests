@@ -116,12 +116,12 @@ jobs:
         with:
           inputFile: '.github/workflows/matrix_includes_for_R-CMD-check.json'
           filter:
-            '[?contains(runOnEvent, `${{ github.event_name }}`)
-               || (contains(os, `"windows"`) && `${{ needs.get_configuration.outputs.check-windows) }}`
-               || (contains(os, `"macOS"`) && `${{ needs.get_configuration.outputs.check-mac) }}`
-               || (contains(os, `"ubuntu"`)
-                   && ((contains(r, `"release"`) && `${{ needs.get_configuration.outputs.check-r-release-version-on-ubuntu) }}`
-                       || (contains(r, `"devel"`) && `${{ needs.get_configuration.outputs.check-r-devel-version-on-ubuntu) }}`))]'
+            '[?contains(runOnEvent, `${{ github.event_name }}`)]'
+               ## || (contains(os, `"windows"`) && `${{ needs.get_configuration.outputs.check-windows) }}`
+               ## || (contains(os, `"macOS"`) && `${{ needs.get_configuration.outputs.check-mac) }}`
+               ## || (contains(os, `"ubuntu"`)
+               ##     && ((contains(r, `"release"`) && `${{ needs.get_configuration.outputs.check-r-release-version-on-ubuntu) }}`
+               ##         || (contains(r, `"devel"`) && `${{ needs.get_configuration.outputs.check-r-devel-version-on-ubuntu) }}`))]'
 
   # For debugging:
   display_matrix:
