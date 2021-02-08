@@ -61,7 +61,7 @@ jobs:
 
     steps:
       - name: Validate Input
-      - run: |
+        run: |
           echo "ALL_INPUTS_VALID=${{
             contains(env.valid-input-values), github.event.inputs.check-manual) &&
             contains(env.valid-input-values), github.event.inputs.check-vignettes) &&
