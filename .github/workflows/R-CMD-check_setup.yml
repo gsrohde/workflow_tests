@@ -179,39 +179,38 @@ jobs:
           echo "${{ github.event_name != 'workflow_dispatch' ||
                 needs.get_configuration.outputs.check-vignettes == 'true' ||
                 needs.get_configuration.outputs.check-manual == 'true' }}"
-          echo "${{ 'a' == 'b' || 'c' }}"
       - name: Maybe install TinyTex
         if: >
           github.event_name != 'workflow_dispatch'
           || needs.get_configuration.outputs.check-vignettes == 'true'
           || fromJSON(needs.get_configuration.outputs.check-manual)
         run: echo "Need TinyTex"
-      ## - name: Check package
-      ##   run: |
-      ##     if ('${{ github.event_name }}' == 'workflow_dispatch') {
-      ##       build_args_value <- c()
-      ##       args_value <- c('--as-cran')
-      ##       if (as.logical('${{ github.event.inputs.check-manual }}') == FALSE) {
-      ##         build_args_value <- append(build_args_value, '--no-manual')
-      ##         args_value <- append(args_value, '--no-manual')
-      ##       }
-      ##       if (as.logical('${{ github.event.inputs.check-vignettes }}') == FALSE) {
-      ##         build_args_value <- append(build_args_value, '--no-build-vignettes')
-      ##         args_value <- append(args_value, '--ignore-vignettes')
-      ##       }
-      ##       if (as.logical('${{ github.event.inputs.run-tests }}') == FALSE) {
-      ##         args_value <- append(args_value, '--no-tests')
-      ##       }
-      ##       if (as.logical('${{ github.event.inputs.check-examples }}') == FALSE) {
-      ##         args_value <- append(args_value, '--no-examples')
-      ##       }
-      ##     } else {
-      ##       build_args_value <- c('--no-build-vignettes')
-      ##       args_value <- c('--as-cran', '--ignore-vignettes')
-      ##     }
-      ##     cat("Running rcmdcheck with",
-      ##           "\n  args =", args_value,
-      ##           "\n  build_args =", build_args_value,
-      ##           "\n  error_on = 'error', and",
-      ##           "\n  check_dir = 'check'\n")
-      ##   shell: Rscript {0}
+      - name: Check package
+        run: |
+          if ('${{ github.event_name }}' == 'workflow_dispatch') {
+            build_args_value <- c()
+            args_value <- c('--as-cran')
+            if ('${{ github.event.inputs.check-manual }}' == 'false') {
+              build_args_value <- append(build_args_value, '--no-manual')
+              args_value <- append(args_value, '--no-manual')
+            }
+            if ('${{ github.event.inputs.check-vignettes }}' == 'false') {
+              build_args_value <- append(build_args_value, '--no-build-vignettes')
+              args_value <- append(args_value, '--ignore-vignettes')
+            }
+            if ('${{ github.event.inputs.run-tests }}' == 'false') {
+              args_value <- append(args_value, '--no-tests')
+            }
+            if ('${{ github.event.inputs.check-examples }}' == 'false') {
+              args_value <- append(args_value, '--no-examples')
+            }
+          } else {
+            build_args_value <- c('--no-build-vignettes')
+            args_value <- c('--as-cran', '--ignore-vignettes')
+          }
+          cat("Running rcmdcheck with",
+                "\n  args =", args_value,
+                "\n  build_args =", build_args_value,
+                "\n  error_on = 'error', and",
+                "\n  check_dir = 'check'\n")
+        shell: Rscript {0}
