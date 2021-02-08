@@ -29,19 +29,19 @@ on:
         default: 'yes'
 
       check-windows:
-        description: 'Test build on Windows'
+        description: 'Test build on Windows (yes/no)'
         required: false
         default: 'no'
       check-mac:
-        description: 'Test build on MacOS'
+        description: 'Test build on MacOS (yes/no)'
         required: false
         default: 'no'
       check-r-release-version-on-ubuntu:
-        description: 'Test build on Ubuntu using the release version of R'
+        description: 'Test build on Ubuntu using the release version of R (yes/no)'
         required: false
         default: 'yes'
       check-r-devel-version-on-ubuntu:
-        description: 'Test build on Ubuntu using the development version of R'
+        description: 'Test build on Ubuntu using the development version of R (yes/no)'
         required: false
         default: 'no'
 
@@ -90,14 +90,24 @@ jobs:
       - name: Set configuration variables
         id: set_outputs
         run: |
-          echo "::set-output name=check-manual::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-manual) }}"
-          echo "::set-output name=check-vignettes::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-vignettes) }}"
-          echo "::set-output name=run-tests::${{ contains(fromJSON(env.yes-values), github.event.inputs.run-tests) }}"
-          echo "::set-output name=check-examples::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-examples) }}"
-          echo "::set-output name=check-windows::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-windows) }}"
-          echo "::set-output name=check-mac::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-mac) }}"
-          echo "::set-output name=check-r-release-version-on-ubuntu::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-r-release-version-on-ubuntu) }}"
-          echo "::set-output name=check-r-devel-version-on-ubuntu::${{ contains(fromJSON(env.yes-values), github.event.inputs.check-r-devel-version-on-ubuntu) }}"
+          echo "::set-output name=check-manual::${{ contains(fromJSON(env.yes-values),
+                                                             github.event.inputs.check-manual) }}"
+          echo "::set-output name=check-vignettes::${{ contains(fromJSON(env.yes-values),
+                                                                github.event.inputs.check-vignettes) }}"
+          echo "::set-output name=run-tests::${{ contains(fromJSON(env.yes-values),
+                                                          github.event.inputs.run-tests) }}"
+          echo "::set-output name=check-examples::${{ contains(fromJSON(env.yes-values),
+                                                               github.event.inputs.check-examples) }}"
+          echo "::set-output name=check-windows::${{ contains(fromJSON(env.yes-values),
+                                                              github.event.inputs.check-windows) }}"
+          echo "::set-output name=check-mac::${{ contains(fromJSON(env.yes-values),
+                                                          github.event.inputs.check-mac) }}"
+          echo "::set-output name=check-r-release-version-on-ubuntu::${{
+                    contains(fromJSON(env.yes-values),
+                             github.event.inputs.check-r-release-version-on-ubuntu) }}"
+          echo "::set-output name=check-r-devel-version-on-ubuntu::${{
+                    contains(fromJSON(env.yes-values),
+                             github.event.inputs.check-r-devel-version-on-ubuntu) }}"
 
   debug:
     name: Debug
@@ -125,11 +135,15 @@ jobs:
           inputFile: '.github/workflows/matrix_includes_for_R-CMD-check.json'
           filter:
             '[?contains(runOnEvent, `${{ github.event_name }}`)
-               || (contains(os, `"windows"`) && `${{ needs.get_configuration.outputs.check-windows }}`)
-               || (contains(os, `"macOS"`) && `${{ needs.get_configuration.outputs.check-mac }}`)
+               || (contains(os, `"windows"`)
+                   && `${{ needs.get_configuration.outputs.check-windows }}`)
+               || (contains(os, `"macOS"`)
+                   && `${{ needs.get_configuration.outputs.check-mac }}`)
                || (contains(os, `"ubuntu"`)
-                   && ((contains(r, `"release"`) && `${{ needs.get_configuration.outputs.check-r-release-version-on-ubuntu }}`)
-                       || (contains(r, `"devel"`) && `${{ needs.get_configuration.outputs.check-r-devel-version-on-ubuntu }}`)))]'
+                   && ((contains(r, `"release"`)
+                        && `${{ needs.get_configuration.outputs.check-r-release-version-on-ubuntu }}`)
+                       || (contains(r, `"devel"`)
+                           && `${{ needs.get_configuration.outputs.check-r-devel-version-on-ubuntu }}`)))]'
 
   # For debugging:
   display_matrix:
