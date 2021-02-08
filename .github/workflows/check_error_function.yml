@@ -14,7 +14,7 @@ jobs:
           echo "VALID=${{ github.event.inputs.yes-no-answer == 'yes' || github.event.inputs.yes-no-answer == 'no' }}" >> $GITHUB_ENV
 
       - name: Abort if invalid
-        if: !fromJSON("false")
+        if: '!fromJSON("false")'
         run: |
           echo "::error::Something went wrong"
           exit 1
