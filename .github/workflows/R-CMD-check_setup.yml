@@ -190,18 +190,18 @@ jobs:
           if ('${{ github.event_name }}' == 'workflow_dispatch') {
             build_args_value <- c()
             args_value <- c('--as-cran')
-            if ('${{ github.event.inputs.check-manual }}' == 'false') {
+            if ('${{ needs.get_configuration.outputs.check-manual }}' == 'false') {
               build_args_value <- append(build_args_value, '--no-manual')
               args_value <- append(args_value, '--no-manual')
             }
-            if ('${{ github.event.inputs.check-vignettes }}' == 'false') {
+            if ('${{ needs.get_configuration.outputs.check-vignettes }}' == 'false') {
               build_args_value <- append(build_args_value, '--no-build-vignettes')
               args_value <- append(args_value, '--ignore-vignettes')
             }
-            if ('${{ github.event.inputs.run-tests }}' == 'false') {
+            if ('${{ needs.get_configuration.outputs.run-tests }}' == 'false') {
               args_value <- append(args_value, '--no-tests')
             }
-            if ('${{ github.event.inputs.check-examples }}' == 'false') {
+            if ('${{ needs.get_configuration.outputs.check-examples }}' == 'false') {
               args_value <- append(args_value, '--no-examples')
             }
           } else {
