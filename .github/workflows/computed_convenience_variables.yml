@@ -10,11 +10,12 @@ on:
 env:
   # Note that checks against these values will all be case insensitive!
   a: '{ yes-values: ["yes", "y"], no-values: ["no", "n"] }'
-  b: ${{ toJSON(fromJSON(env.a).*.* }}
-  c: ${{ toJSON(fromJSON(env.a).yes-values }}
-  d: ${{ toJSON(fromJSON(env.a).no-values.* }}
 
 jobs:
+  env:
+    b: ${{ toJSON(fromJSON(env.a).*.* }}
+    c: ${{ toJSON(fromJSON(env.a).yes-values }}
+    d: ${{ toJSON(fromJSON(env.a).no-values.* }}
   get_vars:
     runs-on: ubuntu-latest
     steps:
