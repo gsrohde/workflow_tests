@@ -11,6 +11,7 @@ on:
   workflow_dispatch:
     # When running manually, allow users to customize the run:
     inputs:
+      # What options should be passed to "R CMD check"?
       check-manual:
         description: 'Check the manual (yes/no)'
         required: false
@@ -28,6 +29,7 @@ on:
         required: false
         default: 'yes'
 
+      # Which platforms should we test?
       check-windows:
         description: 'Test build on Windows (yes/no)'
         required: false
@@ -46,6 +48,7 @@ on:
         default: 'no'
 
 env:
+  # Note that checks against these values will all be case insensitive!
   valid-input-values: '[ "yes", "y", "no", "n" ]'
   yes-values: '[ "yes", "y" ]'
   no-values: '[ "no", "n" ]'
@@ -55,6 +58,7 @@ jobs:
     name: Get run configuration
     runs-on: ubuntu-latest
     outputs:
+      # These are essentially validated, booleanized versions of the input parameters.
       check-manual: ${{ steps.set_outputs.outputs.check-manual }}    
       check-vignettes: ${{ steps.set_outputs.outputs.check-vignettes }}
       run-tests: ${{ steps.set_outputs.outputs.run-tests }}    
@@ -86,7 +90,8 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && env.ALL_INPUTS_VALID == 'false'
         run: |
           echo "::error::All inputs must be either 'yes', 'y', 'no', or 'n'."
-          exit 1
+          exit 1 # Stop the workflow if bad input was given.
+
       - name: Set configuration variables
         # This is only for manual dispatches.
         if: github.event_name == 'workflow_dispatch'
@@ -135,6 +140,9 @@ jobs:
         uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
         with:
           inputFile: '.github/workflows/matrix_includes_for_R-CMD-check.json'
+
+          # This filter uses the JMESPath query language to modify the
+          # strategy matrix.  See https://jmespath.org/.
           filter:
             '[?contains(runOnEvent, `${{ github.event_name }}`)
                || (contains(os, `"windows"`)
@@ -181,12 +189,18 @@ jobs:
       ##     echo "${{ github.event_name != 'workflow_dispatch' ||
       ##           needs.get_configuration.outputs.check-vignettes == 'true' ||
       ##           needs.get_configuration.outputs.check-manual == 'true' }}"
+
       - name: Maybe install TinyTex
+
         if: >
+          # Note: The second and third disjuncts here are alternative
+          # ways of getting a boolean value from the outputs (which
+          # are strings):
           github.event_name != 'workflow_dispatch'
           || needs.get_configuration.outputs.check-vignettes == 'true'
           || fromJSON(needs.get_configuration.outputs.check-manual)
         run: echo "Need TinyTex"
+
       - name: Check package
         run: |
           if ('${{ github.event_name }}' == 'workflow_dispatch') {
