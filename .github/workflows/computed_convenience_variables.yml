@@ -4,7 +4,7 @@
 name: Test some things
 
 on:
-  push:
+  #push:
   workflow_dispatch:
 
 env:
