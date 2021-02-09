@@ -168,7 +168,7 @@ jobs:
   ##       echo "matrix: $MATRIX_CONTEXT"
 
   R-CMD-check:
-    name: Check R package on platform ${{ matrix.os }} using the (${{ matrix.r }}) version of R
+    name: Check R package on platform ${{ matrix.os }} using the ${{ matrix.r }} version of R
     needs: [get_configuration, matrix_prep]
     runs-on: ${{ matrix.os }}
     strategy:
