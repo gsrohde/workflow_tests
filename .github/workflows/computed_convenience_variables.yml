@@ -15,9 +15,9 @@ jobs:
   get_vars:
     runs-on: ubuntu-latest
     env:
-      b: ${{ toJSON(fromJSON(env.a).*.* }}
-      c: ${{ toJSON(fromJSON(env.a).yes-values }}
-      d: ${{ toJSON(fromJSON(env.a).no-values.* }}
+      b: 1 #${{ toJSON(fromJSON(env.a).*.* }}
+      c: 2 #${{ toJSON(fromJSON(env.a).yes-values }}
+      d: 3 #${{ toJSON(fromJSON(env.a).no-values.* }}
     steps:
       - name: Print varsValidate Input
         run: |
