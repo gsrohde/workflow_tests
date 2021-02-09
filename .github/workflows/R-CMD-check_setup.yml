@@ -208,14 +208,14 @@ jobs:
               build_args_value <- append(build_args_value, '--no-manual')
               args_value <- append(args_value, '--no-manual')
             }
-            if (as.logical(${{ !fromJSON(needs.get_configuration.outputs.check-vignettes) }}) {
+            if (as.logical("${{ !fromJSON(needs.get_configuration.outputs.check-vignettes) }}") {
               build_args_value <- append(build_args_value, '--no-build-vignettes')
               args_value <- append(args_value, '--ignore-vignettes')
             }
             if (${{ fromJSON(needs.get_configuration.outputs.run-tests) == false }}) {
               args_value <- append(args_value, '--no-tests')
             }
-            if (as.logical(${{ fromJSON(needs.get_configuration.outputs.check-examples) == false }}) {
+            if (as.logical("${{ fromJSON(needs.get_configuration.outputs.check-examples) == false }}") {
               args_value <- append(args_value, '--no-examples')
             }
           } else {
