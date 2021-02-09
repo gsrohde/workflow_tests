@@ -192,10 +192,10 @@ jobs:
 
       - name: Maybe install TinyTex
 
-        if: |
-          # Note: The second and third disjuncts here are alternative
-          # ways of getting a boolean value from the outputs (which
-          # are strings):
+        # Note: The second and third disjuncts in this "if" value are
+        # alternative ways of getting a boolean value from the outputs
+        # (which are strings):
+        if: >
           github.event_name != 'workflow_dispatch'
           || needs.get_configuration.outputs.check-vignettes == 'true'
           || fromJSON(needs.get_configuration.outputs.check-manual)
