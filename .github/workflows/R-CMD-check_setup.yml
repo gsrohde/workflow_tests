@@ -192,7 +192,7 @@ jobs:
 
       - name: Maybe install TinyTex
 
-        if: >
+        if: |
           # Note: The second and third disjuncts here are alternative
           # ways of getting a boolean value from the outputs (which
           # are strings):
