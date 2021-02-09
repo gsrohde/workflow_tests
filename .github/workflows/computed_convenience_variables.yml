@@ -17,7 +17,7 @@ env:
 jobs:
   get_vars:
     runs-on: ubuntu-latest
-     steps:
+    steps:
       - name: Print varsValidate Input
         run: |
           echo ${{ env.a }}
