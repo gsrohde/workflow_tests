@@ -88,6 +88,8 @@ jobs:
           echo "::error::All inputs must be either 'yes', 'y', 'no', or 'n'."
           exit 1
       - name: Set configuration variables
+        # This is only for manual dispatches.
+        if: github.event_name == 'workflow_dispatch'
         id: set_outputs
         run: |
           echo "::set-output name=check-manual::${{ contains(fromJSON(env.yes-values),
