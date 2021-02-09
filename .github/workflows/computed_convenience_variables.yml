@@ -25,5 +25,5 @@ jobs:
           echo ${{ env.b }}
           echo ${{ env.c }}
           echo ${{ env.d }}
-          echo ${{ toJSON(fromJSON(env.a)) }}
+          echo ${{ toJSON(fromJSON(${{ env.a }})) }}
           
