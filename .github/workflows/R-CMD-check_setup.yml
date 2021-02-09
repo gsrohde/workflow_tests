@@ -76,12 +76,12 @@ jobs:
             contains(fromJSON(env.valid-input-values), github.event.inputs.check-r-release-version-on-ubuntu) &&
             contains(fromJSON(env.valid-input-values), github.event.inputs.check-r-devel-version-on-ubuntu)
           }}" >> $GITHUB_ENV
-      - name: Debug validity check
-        run: |
-          echo "${{ github.event_name }}"
-          echo "${{ github.event_name == 'workflow_dispatch' }}"
-          echo "${{  env.ALL_INPUTS_VALID }}"
-          echo "${{  env.ALL_INPUTS_VALID == 'false' }}"
+      ## - name: Debug validity check
+      ##   run: |
+      ##     echo "${{ github.event_name }}"
+      ##     echo "${{ github.event_name == 'workflow_dispatch' }}"
+      ##     echo "${{  env.ALL_INPUTS_VALID }}"
+      ##     echo "${{  env.ALL_INPUTS_VALID == 'false' }}"
       - name: Abort if invalid
         if: github.event_name == 'workflow_dispatch' && env.ALL_INPUTS_VALID == 'false'
         run: |
@@ -109,16 +109,16 @@ jobs:
                     contains(fromJSON(env.yes-values),
                              github.event.inputs.check-r-devel-version-on-ubuntu) }}"
 
-  debug:
-    name: Debug
-    needs: get_configuration
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "${{ needs.get_configuration.outputs.check-windows }}"
-          echo "${{ needs.get_configuration.outputs.check-mac }}"
-          echo "${{ needs.get_configuration.outputs.check-r-release-version-on-ubuntu }}"
-          echo "${{ needs.get_configuration.outputs.check-r-devel-version-on-ubuntu }}"
+  ## debug:
+  ##   name: Debug
+  ##   needs: get_configuration
+  ##   runs-on: ubuntu-latest
+  ##   steps:
+  ##     - run: |
+  ##         echo "${{ needs.get_configuration.outputs.check-windows }}"
+  ##         echo "${{ needs.get_configuration.outputs.check-mac }}"
+  ##         echo "${{ needs.get_configuration.outputs.check-r-release-version-on-ubuntu }}"
+  ##         echo "${{ needs.get_configuration.outputs.check-r-devel-version-on-ubuntu }}"
 
   matrix_prep:
     name: Prepare strategy matrix
@@ -145,17 +145,17 @@ jobs:
                        || (contains(r, `"devel"`)
                            && `${{ needs.get_configuration.outputs.check-r-devel-version-on-ubuntu }}`)))]'
 
-  # For debugging:
-  display_matrix:
-    name: Display strategy matrix
-    needs: matrix_prep # Supplies matrix output.
-    runs-on: ubuntu-latest
-    steps:
-    - name: Report Configuration
-      env:
-        MATRIX_CONTEXT: ${{ needs.matrix_prep.outputs.matrix }}
-      run: |
-        echo "matrix: $MATRIX_CONTEXT"
+  ## # For debugging:
+  ## display_matrix:
+  ##   name: Display strategy matrix
+  ##   needs: matrix_prep # Supplies matrix output.
+  ##   runs-on: ubuntu-latest
+  ##   steps:
+  ##   - name: Report Configuration
+  ##     env:
+  ##       MATRIX_CONTEXT: ${{ needs.matrix_prep.outputs.matrix }}
+  ##     run: |
+  ##       echo "matrix: $MATRIX_CONTEXT"
 
   R-CMD-check:
     name: Check R package on platform ${{ matrix.os }} using the (${{ matrix.r }}) version of R
@@ -170,15 +170,15 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: Debug TinyTex test
-        run: |
-          echo "${{ github.event_name }}"
-          echo "${{ github.event_name != 'workflow_dispatch' }}"
-          echo "${{ needs.get_configuration.outputs.check-vignettes }}"
-          echo "${{ needs.get_configuration.outputs.check-manual }}"
-          echo "${{ github.event_name != 'workflow_dispatch' ||
-                needs.get_configuration.outputs.check-vignettes == 'true' ||
-                needs.get_configuration.outputs.check-manual == 'true' }}"
+      ## - name: Debug TinyTex test
+      ##   run: |
+      ##     echo "${{ github.event_name }}"
+      ##     echo "${{ github.event_name != 'workflow_dispatch' }}"
+      ##     echo "${{ needs.get_configuration.outputs.check-vignettes }}"
+      ##     echo "${{ needs.get_configuration.outputs.check-manual }}"
+      ##     echo "${{ github.event_name != 'workflow_dispatch' ||
+      ##           needs.get_configuration.outputs.check-vignettes == 'true' ||
+      ##           needs.get_configuration.outputs.check-manual == 'true' }}"
       - name: Maybe install TinyTex
         if: >
           github.event_name != 'workflow_dispatch'
