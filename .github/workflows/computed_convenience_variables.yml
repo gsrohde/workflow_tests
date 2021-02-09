@@ -12,12 +12,12 @@ env:
   a: '{ yes-values: ["yes", "y"], no-values: ["no", "n"] }'
 
 jobs:
-  env:
-    b: ${{ toJSON(fromJSON(env.a).*.* }}
-    c: ${{ toJSON(fromJSON(env.a).yes-values }}
-    d: ${{ toJSON(fromJSON(env.a).no-values.* }}
   get_vars:
     runs-on: ubuntu-latest
+    env:
+      b: ${{ toJSON(fromJSON(env.a).*.* }}
+      c: ${{ toJSON(fromJSON(env.a).yes-values }}
+      d: ${{ toJSON(fromJSON(env.a).no-values.* }}
     steps:
       - name: Print varsValidate Input
         run: |
