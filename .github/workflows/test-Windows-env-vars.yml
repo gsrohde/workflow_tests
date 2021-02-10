@@ -52,7 +52,7 @@ jobs:
   setter-2:
     runs-on: ubuntu-latest
     outputs:
-      need-tinytex: ${{ true }}
+      need-tinytex: ${{ steps.set_outputs.outputs.need-tinytex }}
     steps:
       - name: Set outputs
         id: set_outputs
