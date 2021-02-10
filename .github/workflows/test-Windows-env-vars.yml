@@ -18,4 +18,5 @@ jobs:
         run: |
           echo "${{ env.NEED_TINYTEX }}"
           echo "$NEED_TINYTEX"
+          echo $GITHUB_ENV
           
