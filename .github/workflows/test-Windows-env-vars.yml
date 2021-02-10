@@ -19,4 +19,16 @@ jobs:
           echo "${{ env.NEED_TINYTEX }}"
           echo "$NEED_TINYTEX"
           echo $GITHUB_ENV
+
+  example-from-workflow-docs:
+    runs-on: windows-latest
+    steps:
+      - name: Set the value
+        id: step_one
+        run: |
+            echo "action_state=yellow" >> $GITHUB_ENV
+      - name: Use the value
+        id: step_two
+        run: |
+            echo "${{ env.action_state }}" # This will output 'yellow'
           
