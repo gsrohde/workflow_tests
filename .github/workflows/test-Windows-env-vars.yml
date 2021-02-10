@@ -1,0 +1,21 @@
+on: 
+  push:
+  workflow_dispatch:
+  
+jobs:
+  example-job:
+    runs-on: windows-latest
+
+    steps:
+      - name: Set var
+        run: |
+          echo "NEED_TINYTEX=true" >> $GITHUB_ENV
+      - name: Install TinyTex
+        if: env.NEED_TINYTEX == 'true'
+        run: |
+          echo "(Install TinyTex)"
+      - name: View NEED_TINYTEX
+        run: |
+          echo "${{ env.NEED_TINYTEX }}"
+          echo "$NEED_TINYTEX"
+          
