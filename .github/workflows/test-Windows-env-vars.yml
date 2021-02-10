@@ -1,7 +1,7 @@
 on: 
   push:
   workflow_dispatch:
-  
+
 jobs:
   example-job:
     runs-on: windows-latest
@@ -31,4 +31,18 @@ jobs:
         id: step_two
         run: |
             echo "${{ env.action_state }}" # This will output 'yellow'
-          
+
+  setter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set var
+        run: |
+          echo "NEED_TINYTEX=true" >> $GITHUB_ENV
+
+  getter-1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get using ubuntu
+        run: |
+          echo $GITHUB_ENV
+          echo $NEED_TINYTEX
