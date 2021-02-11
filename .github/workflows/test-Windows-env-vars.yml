@@ -86,7 +86,7 @@ jobs:
       - name: Check need for TinyTex
         id: check-if-tinytex-needed
         run: |
-          echo "::set-output name=need-tinytex=${{ true }}"
+          echo "::set-output name=need-tinytex::${{ 1 == 1 }}"
 
   getter-tt:
     runs-on: ${{ matrix.os }}
