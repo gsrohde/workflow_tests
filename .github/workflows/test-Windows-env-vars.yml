@@ -104,3 +104,8 @@ jobs:
       - if: needs.setter-tt.outputs.need-tinytex == 'true'
         run: |
           echo "${{ needs.setter-tt.outputs.need-tinytex }}"
+      - name: Print runner.os and matrix.os
+        run: |
+          echo ${{ runner.os }}
+          echo ${{ matrix.os }}
+
