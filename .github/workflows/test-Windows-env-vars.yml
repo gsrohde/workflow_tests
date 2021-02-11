@@ -77,3 +77,27 @@ jobs:
       - name: Get output
         run: |
           echo ${{ needs.setter-2.outputs.need-tinytex }}
+
+  setter-tt:
+    runs-on: ubuntu-latest
+    outputs:
+      need-tinytex: ${{ steps.check-if-tinytex-needed.outputs.need-tinytex }}
+    steps:
+      - name: Check need for TinyTex
+        id: check-if-tinytex-needed
+        run: |
+          echo "::set-output name=need-tinytex=${{ 1 == 1 }}"
+
+  getter-tt:
+    runs-on: ${{ matrix.os }}
+    needs: setter-tt
+    stratety:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+    steps:
+      - run:
+        echo ${{ needs.setter-tt.outputs.need-tinytex }}
+      - run:
+        if needs.setter-tt.outputs.need-tinytex == 'true'
+        echo ${{ needs.setter-tt.outputs.need-tinytex }}
