@@ -99,5 +99,5 @@ jobs:
       - run:
         echo ${{ needs.setter-tt.outputs.need-tinytex }}
       - run:
-        if needs.setter-tt.outputs.need-tinytex == 'true'
+        if: needs.setter-tt.outputs.need-tinytex == 'true'
         echo ${{ needs.setter-tt.outputs.need-tinytex }}
