@@ -91,7 +91,7 @@ jobs:
   getter-tt:
     runs-on: ${{ matrix.os }}
     needs: setter-tt
-    stratety:
+    strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest ]
