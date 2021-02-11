@@ -97,7 +97,7 @@ jobs:
         os: [ ubuntu-latest, windows-latest ]
     steps:
       - run: |
-        echo ${{ needs.setter-tt.outputs.need-tinytex }}
+          echo ${{ needs.setter-tt.outputs.need-tinytex }}
       - if: needs.setter-tt.outputs.need-tinytex == 'true'
         run: |
-        echo ${{ needs.setter-tt.outputs.need-tinytex }}
+          echo ${{ needs.setter-tt.outputs.need-tinytex }}
