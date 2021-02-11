@@ -98,6 +98,8 @@ jobs:
     steps:
       - run: |
           echo "${{ '1' == '1' }}"
+          echo "${{ 1 == 1 }}"
+          echo "${{ 111 }}"
           echo "${{ needs.setter-tt.outputs.need-tinytex }}"
       - if: needs.setter-tt.outputs.need-tinytex == 'true'
         run: |
