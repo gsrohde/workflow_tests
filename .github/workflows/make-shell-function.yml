@@ -1,0 +1,20 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  job-A:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # Checks out this repository under $GITHUB_WORKSPACE/source:
+
+    - name: 1. Check out master
+      uses: actions/checkout@v2
+      with:
+        path: source
+
+    - name: 2. Run Make
+      run: |
+        cd source
+        make
