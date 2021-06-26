@@ -18,3 +18,13 @@ jobs:
       run: |
         cd source
         make
+
+    - name: 3. Run Make using action
+      uses: ./source/.github/actions/doxygen-action
+      with:
+        # Working directory
+        working-directory: "source/doxygen"
+
+    - name: 4. Display result page
+      run: |
+        cat source/doxygen/doxygen_docs_complete/html/page3.html
