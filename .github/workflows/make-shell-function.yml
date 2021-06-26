@@ -25,9 +25,11 @@ jobs:
         # Working directory
         working-directory: "source/doxygen"
 
-    - name: 4. Display make version
+    - name: 4. Display make version and git hashes
       run: |
         cat source/doxygen/make_version
+        cat source/doxygen/git_hash_from_variable
+        cat source/doxygen/git_hash_from_shell_call
 
     - name: 5. Display result page
       run: |

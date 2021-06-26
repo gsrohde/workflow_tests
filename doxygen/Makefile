@@ -212,6 +212,8 @@ all-pdf: $(call target_directories,$(complete_docs_directory),latex)
 
 $(complete_docs_directory)/html $(complete_docs_directory)/latex &: $(call source_prerequisites,$(all_source))
 	$(build-recipe)
+	echo $(git_hash) > git_hash_from_variable
+	echo $(shell git show -s --format=%h) > git_hash_from_shell_call
 
 
 view: all-html
