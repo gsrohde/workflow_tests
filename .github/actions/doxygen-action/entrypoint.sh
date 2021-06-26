@@ -11,6 +11,6 @@ if [ ! -d "$1" ]; then
 fi
 cd "$1"
 
-
+make --version > make_version
 make color=$2 extract_private=$3 generate_treeview=$4 $5 $6
 

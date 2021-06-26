@@ -25,6 +25,10 @@ jobs:
         # Working directory
         working-directory: "source/doxygen"
 
-    - name: 4. Display result page
+    - name: 4. Display make version
+      run: |
+        cat source/doxygen/make_version
+
+    - name: 5. Display result page
       run: |
         cat source/doxygen/doxygen_docs_complete/html/page3.html
