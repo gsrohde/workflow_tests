@@ -8,7 +8,7 @@ FROM alpine:3.13
 COPY entrypoint.sh /entrypoint.sh
 
 # Install required packages
-RUN apk add doxygen make
+RUN apk add doxygen make git
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT ["/entrypoint.sh"]
